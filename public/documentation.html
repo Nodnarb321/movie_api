@@ -1,3 +1,93 @@
-MOVIE API (future title) - 
-Creating an API for movies where users can look up multiple aspects from movies
-such as actors, directors, etc.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation</title>
+</head>
+<body>
+    <h1>Documentation</h1>
+    <br>
+    <br>
+    <table>
+        <tr>
+            <th>REQUEST</th>
+            <th>URL</th>
+            <th>RESPONSE</th>
+            <th>DESCRIPTION</th>
+        </tr>
+        <tr>
+            <th><br></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>POST</th>
+            <th>/users</th>
+            <th>201(success) 400(fail)</th>
+            <th>Create user</th>
+        </tr>
+        <tr>
+            <th>POST</th>
+            <th>/users/:id/:movieTitle</th>
+            <th>201(success) 400(fail)</th>
+            <th>User updates movies</th>
+        </tr>
+        <tr>
+            <th>GET</th>
+            <th>/</th>
+            <th>200(success)</th>
+            <th>Main page</th>
+        </tr>
+        <tr>
+            <th>GET</th>
+            <th>/documentation</th>
+            <th>200(success)</th>
+            <th>Documentation</th>
+        </tr>
+        <tr>
+            <th>GET</th>
+            <th>/movies</th>
+            <th>200(success) 400(fail)</th>
+            <th>Shows list of movies</th>
+        </tr>
+        <tr>
+            <th>GET</th>
+            <th>/movies/:title</th>
+            <th>200(success) 400(fail)</th>
+            <th>Shows data from title</th>
+        </tr>
+        <tr>
+            <th>GET</th>
+            <th>/movies/genre/:genreName</th>
+            <th>200(success) 400(fail)</th>
+            <th>Shows data on a genre</th>
+        </tr>
+        <tr>
+            <th>GET</th>
+            <th>/movies/directors/:directorName</th>
+            <th>200(success) 400(fail)</th>
+            <th>Shows data on a director</th>
+        </tr>
+        <tr>
+            <th>PUT</th>
+            <th>/users/:id</th>
+            <th>200(success) 400(fail)</th>
+            <th>Allows user to update profile</th>
+        </tr>
+        <tr>
+            <th>DELETE</th>
+            <th>/users/:id/:movieTitle</th>
+            <th>200(success) 400(fail)</th>
+            <th>Allows user to remove movie from list</th>
+        </tr>
+        <tr>
+            <th>DELETE</th>
+            <th>/users/:id</th>
+            <th>200(success) 400(fail)</th>
+            <th>Allows user to remove email from registry</th>
+        </tr>
+    </table>
+</body>
+</html>
