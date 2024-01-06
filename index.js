@@ -13,6 +13,11 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
+const { check, validationResult } = require('express-validator');
+
+const cors = require('cors');
+app.use(cors());
+
 let auth = require('./auth')(app);
 
 const passport = require('passport');
@@ -220,7 +225,21 @@ let movies = [
 //CREATE LIST
 
 //ADD A USER
-app.post('/users', async (req, res) => {
+app.post('/users',
+    [
+        check('Username', 'Username is Required').isLength({min: 5}),
+        check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+        check('Password', 'Password is Required').not().isEmpty(),
+        check('Email', 'Email does not appear to be valid').isEmail()
+    ], async (req, res) => {
+
+    let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    let hashedPassword = Users.hashPassword(req.body.Password);
     await Users.findOne({ Username: req.body.Username })
         .then((users) => {
             if (users) {
@@ -229,7 +248,7 @@ app.post('/users', async (req, res) => {
                 Users
                     .create({
                         Username: req.body.Username,
-                        Password: req.body.Password,
+                        Password: hashedPassword,
                         Email: req.body.Email,
                         Birthday: req.body.Birthday
                     })
@@ -359,8 +378,19 @@ async (req, res) => {
 //UPDATE LIST
 
 //UPDATES A USER BY USERNAME
-app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
-async (req, res) => {
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }), 
+[
+    check('Username', 'Username is Required').isLength({min: 5}),
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('Password', 'Password is Required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+], async (req, res) => {
+
+let errors = validationResult(req);
+
+if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+}
     await Users.findOneAndUpdate({ Username: req.params.Username }, {
         $set:
             {
@@ -417,5 +447,8 @@ async (req, res) => {
     });
 });
 
-app.listen(8080, () => console.log('listening on 8080')) 
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0',() => {
+    console.log('Listening on Port ' + port);
+});
 
